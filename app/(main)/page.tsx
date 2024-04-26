@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 import { useRouter } from 'next/navigation';
-import React, { useContext, useState } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import { Checkbox } from 'primereact/checkbox';
+import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
 import { LayoutContext } from '@/layout/context/layoutcontext';
@@ -16,6 +17,7 @@ const LoginPage = () => {
     const [checked, setChecked] = useState(false);
     const { layoutConfig } = useContext(LayoutContext);
     const usuarioService = new UsuarioService();
+    const toast = useRef<Toast>(null);
 
     const router = useRouter();
     const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden',
@@ -28,12 +30,19 @@ const LoginPage = () => {
             localStorage.setItem('refleshToken', response.data.refleshToken)
             router.push('/pages/usuario')
         }).catch((error) => {
+            toast.current?.show({
+                severity: 'error',
+                summary: 'Senha ou email incorretos',
+                detail: 'Senha ou email incorretos, tente novamente!',
+                life: 3000
+            });
             console.log(error)
         })
     }
 
     return (
         <div className={containerClassName}>
+         <Toast ref={toast} />
             <div className="flex flex-column align-items-center justify-content-center" style={{width:'100%'}}>
                 <div style={{
                         borderRadius: '23px',
@@ -59,8 +68,8 @@ const LoginPage = () => {
                                 Senha
                             </label>
                             <Password inputId="password1" value={password} 
-                            onChange={(e) => setPassword(e.target.value)} placeholder="Password" 
-                            toggleMask className="w-full mb-5" inputClassName="w-full p-3 md:w-30rem"></Password>
+                            onChange={(e) => setPassword(e.target.value)} placeholder="Senha" 
+                            className="w-full mb-5" inputClassName="w-full p-3 md:w-30rem"></Password>
 
                             <div className="flex align-items-center justify-content-between mb-5 gap-5">
                                 <div className="flex align-items-center">
