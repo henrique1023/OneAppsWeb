@@ -10,7 +10,7 @@ export class UsuarioService {
     router = useRouter();
     
     recuperaToken() {
-        if(localStorage.getItem('accessToken') === null) {
+        if(localStorage.getItem('accessToken') === null || localStorage.getItem('accessToken') === undefined){
             this.router.push('/');
             return ''
         }

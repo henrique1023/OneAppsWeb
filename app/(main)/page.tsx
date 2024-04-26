@@ -36,7 +36,6 @@ const LoginPage = () => {
                 detail: 'Senha ou email incorretos, tente novamente!',
                 life: 3000
             });
-            console.log(error)
         })
     }
 
@@ -67,9 +66,9 @@ const LoginPage = () => {
                             <label htmlFor="password1" className="block text-900 font-medium text-xl mb-2">
                                 Senha
                             </label>
-                            <Password inputId="password1" value={password} 
+                            <InputText id="password1" value={password} type='password'
                             onChange={(e) => setPassword(e.target.value)} placeholder="Senha" 
-                            className="w-full mb-5" inputClassName="w-full p-3 md:w-30rem"></Password>
+                            className="w-full md:w-30rem mb-5" style={{ padding: '1rem' }} ></InputText>
 
                             <div className="flex align-items-center justify-content-between mb-5 gap-5">
                                 <div className="flex align-items-center">
